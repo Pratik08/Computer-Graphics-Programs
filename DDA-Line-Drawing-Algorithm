@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <conio.h>
+#include <graphics.h>
+#include <math.h>
+
+int main()
+{
+	int x1, x2, y1, y2, dx, dy, steps, i;
+	float xi, yi, x, y;
+	int gd = DETECT, gm = DETECT;
+	clrscr();
+	printf("\nEnter x1 and y1\n");
+	scanf("%d %d", &x1, &y1);
+	printf("\nEnter x2 and y2\n");
+	scanf("%d %d", &x2, &y2);
+	initgraph(&gd, &gm, "C:\\TC\\BGI");
+	cleardevice();
+	dx = x2 - x1;
+	dy = y2 - y1;
+	if(abs(dx) >= abs(dy))
+	{
+		steps = abs(dx);
+	}
+	else
+	{
+		steps = abs(dy);
+	}
+	xi = dx / (float) steps;
+	yi = dy / (float) steps;
+	x = x1;
+	y = y1;
+	putpixel(x1, y1, 4);
+	for (i = 0; i < steps; i++)
+	{
+		x += xi;
+		y += yi;
+		x += 0.5;
+		y += 0.5;
+		floor(x);
+		floor(y);
+		putpixel(x, y, 4);
+	}
+	getch();
+	closegraph();
+	return 0;
+}
