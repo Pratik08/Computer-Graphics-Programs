@@ -1,0 +1,60 @@
+#include<stdio.h>
+#include<conio.h>
+#include<graphics.h>
+
+void midcir(int xc, int yc, int r);
+void drawcircle(int xc,int yc,int x,int y);
+
+void drawcircle(int xc,int yc,int x,int y)
+{
+	putpixel(xc + x, yc + y, RED);
+	putpixel(xc + y, yc + x, RED);
+	putpixel(xc - x, yc + y, RED);
+	putpixel(xc - y, yc + x, RED);
+	putpixel(xc - x, yc - y, RED);
+	putpixel(xc - y, yc - x, RED);
+	putpixel(xc + x, yc - y, RED);
+	putpixel(xc + y, yc - x, RED);
+}
+
+void midcir(int xc, int yc, int r)
+{
+	int x, y;
+	float p0, pk;
+	p0 = 1 - r;
+	pk = p0;
+	x = 0;
+	y = r;
+	drawcircle(xc, yc, x, y);
+	while(x <= y)
+	{
+		x += 1;
+		if(pk < 0)
+		{
+			pk = pk + 2 * x + 1;
+		}
+		else
+		{
+			pk = pk + 2 * x + 1 - 2 * y;
+			y -=1;
+		}
+		drawcircle(xc, yc, x, y);
+	}
+}
+
+void main()
+{
+	int xc, yc, r;
+	int gdriver = DETECT, gmode;
+	clrscr();
+	printf("\nEnter the coordinates of the centre\n");
+	scanf("%d %d", &xc, &yc);
+	printf("\nEnter the radius of the circle\n");
+	scanf("%d", &r);
+	initgraph(&gdriver, &gmode, "C:\\TurboC3\\BGI");
+	//line(0, 200, 500, 200);
+	//line(200, 0, 200, 500);
+	midcir(xc, yc, r);
+	getch();
+	closegraph();
+}
