@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<conio.h>
+#include<graphics.h>
+int sign(int a, int b)
+{
+	int result = b - a;
+	int ret = (result > 0)? 1 : ((result < 0)? -1: 0);
+	return ret;
+}
+void bresenham(int x1, int y1, int x2, int y2)
+{
+	int x, y, s1, s2, i, dx, dy, temp, exchange, e;
+	dx = abs(x2 - x1);
+	dy = abs(y2 - y1);
+	s1 = sign(x1, x2);
+	s2 = sign(y1, y2);
+	x = x1;
+	y = y1;
+	if(dy > dx)
+	{
+		temp = dx;
+		dx = dy;
+		dy = temp;
+		exchange = 1;
+	}
+	else
+	{
+		exchange = 0;
+	}
+	e = 2 * dy - dx;
+	putpixel(x + 200, y + 200, RED);
+	for(i = 0; i <= dx; i++)
+	{
+		while(e >= 0)
+		{
+			if(exchange == 1)
+			{
+				x += s1;
+			}
+			else
+			{
+				y += s2;
+			}
+			e = e - 2 * dx;
+		}
+		if(exchange == 1)
+		{
+			y += s2;
+		}
+		else
+		{
+			x += s1;
+		}
+		e = e + 2 * dy;
+		putpixel(x + 200, y + 200, RED);
+	}
+}
+
+void main()
+{
+	int x1, x2, y1, y2, gdriver = DETECT, gmode;
+	clrscr();
+	printf("\nEnter the coordinates for x1 and y1\n");
+	scanf("%d %d", &x1, &y1);
+	printf("\nEnter the coordinates for x2 and y2\n");
+	scanf("%d %d", &x2, &y2);
+	initgraph(&gdriver, &gmode, "C:\\TC\\BGI");
+	line(200, 0, 200, 500);
+	line(0, 200, 500, 200);
+	bresenham(x1, y1, x2, y2);
+	getch();
+	closegraph();
+}
